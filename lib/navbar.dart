@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:world/pages/addTask/addTask.dart';
 import './pages/taskList/taskList.dart';
 
 class BottomNavbar extends StatefulWidget {
@@ -17,11 +18,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       color: Colors.white,
       backgroundColor: Colors.blueAccent);
   static const List<Widget> _widgetOptions = <Widget>[
-    Center(
-        child: Text(
-      'Add Tasks',
-      style: optionStyle,
-    )),
+    AddTask(),
     TaskList(),
     Center(
         child: Text(
