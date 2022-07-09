@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,15 +26,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 0: Home',
+      'Today Tasks',
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'List of Tasks',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
+      'Report',
+      style: optionStyle,
+    ),
+    Text(
+      'Profile',
       style: optionStyle,
     ),
   ];
@@ -47,31 +52,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: 1,
+        backgroundColor: Colors.blueAccent,
+        animationDuration: const Duration(milliseconds: 340),
+        items: <Widget>[
+          const Icon(Icons.add, size: 30),
+          const Icon(Icons.list, size: 30),
+          const Icon(Icons.person, size: 30)
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
+      body: Container(color: Colors.blueAccent),
     );
   }
 }
