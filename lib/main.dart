@@ -22,8 +22,10 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.blueAccent);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Today Tasks',
@@ -31,10 +33,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ),
     Text(
       'List of Tasks',
-      style: optionStyle,
-    ),
-    Text(
-      'Report',
       style: optionStyle,
     ),
     Text(
@@ -56,14 +54,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         index: 1,
         backgroundColor: Colors.blueAccent,
         animationDuration: const Duration(milliseconds: 340),
-        items: <Widget>[
-          const Icon(Icons.add, size: 30),
-          const Icon(Icons.list, size: 30),
-          const Icon(Icons.person, size: 30)
+        items: const <Widget>[
+          Icon(Icons.add, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.person, size: 30)
         ],
         onTap: _onItemTapped,
       ),
-      body: Container(color: Colors.blueAccent),
+      body: Container(
+          child: Center(child: _widgetOptions[_selectedIndex]),
+          color: Colors.blueAccent),
     );
   }
 }
