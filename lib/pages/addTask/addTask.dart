@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
@@ -8,34 +9,8 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  // int _selectedIndex = 0;
-  // static const TextStyle optionStyle = TextStyle(
-  //     fontSize: 30,
-  //     fontWeight: FontWeight.bold,
-  //     color: Colors.white,
-  //     backgroundColor: Colors.blueAccent);
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
-
-  // final tasks = <Widget>[
-  //   Task(),
-  //   SizedBox(height: 5),
-  //   Task(),
-  //   SizedBox(height: 5),
-  //   Task(),
-  //   SizedBox(height: 5),
-  //   Task(),
-  //   SizedBox(height: 5),
-  //   Task()
-  // ];;
-  // }
-
   late TextEditingController _controller;
-
+  var color;
   @override
   void initState() {
     _controller = TextEditingController();
@@ -57,7 +32,6 @@ class _AddTaskState extends State<AddTask> {
         TextField(
             controller: _controller,
             autofocus: false,
-            // style: TextStyle(color: Colors.white),
             obscureText: false,
             maxLength: 100,
             decoration: InputDecoration(
@@ -76,6 +50,20 @@ class _AddTaskState extends State<AddTask> {
               filled: true,
               labelText: 'Your Task',
             )),
+        MaterialColorPicker(
+            onColorChange: (Color color) {
+              setState(() {
+                this.color = color;
+              });
+            },
+            circleSize: 35,
+            // colors: [
+            //   Colors.red,
+            //   Colors.deepOrange,
+            //   Colors.yellow,
+            //   Colors.lightGreen
+            // ],
+            selectedColor: color),
       ],
     );
   }
