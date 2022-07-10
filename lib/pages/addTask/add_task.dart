@@ -16,7 +16,7 @@ class _AddTaskState extends State<AddTask> {
   late TextEditingController _controller;
   var color = const Color(0xfff44336);
   var db;
-  var submitButtonState = ButtonState.loading;
+  var submitButtonState = ButtonState.idle;
   var isSaving = false;
 
   @override
