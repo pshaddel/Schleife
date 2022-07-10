@@ -57,7 +57,18 @@ class TaskModel {
   // Read all Tasks (journals)
   static Future<List<Map<String, dynamic>>> getTasks() async {
     final db = await TaskModel.db();
-    return db.query('Tasks', orderBy: "id");
+    const weekdays = [
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+      'sunday'
+    ];
+    final today = DateTime.now().weekday.toInt();
+    return db.query('Tasks',
+        orderBy: "id", where: "${weekdays[today - 1]} = ?", whereArgs: [1]);
   }
 
   // Read a single Task by id

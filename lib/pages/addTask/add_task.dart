@@ -47,9 +47,8 @@ class _AddTaskState extends State<AddTask> {
       });
       await TaskModel.createTask(_controller.text, color.value, weekDays);
       await Future.delayed(Duration(milliseconds: 200));
-      print(await TaskModel.getTasks());
+      // print(await TaskModel.getTasks());
       isSaving = false;
-      // print('hereee');
       setState(() {
         submitButtonState = ButtonState.success;
         _controller.text = '';
@@ -61,7 +60,8 @@ class _AddTaskState extends State<AddTask> {
         submitButtonState = ButtonState.idle;
       });
     } catch (e) {
-      // print(e);
+      print(e);
+    } finally {
       setState(() {
         submitButtonState = ButtonState.fail;
       });

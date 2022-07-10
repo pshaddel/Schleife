@@ -48,7 +48,7 @@ class _TaskListState extends State<TaskList> {
         height: 10,
       ));
     }
-    print(data[0]);
+    print(data);
 
     setState(() {
       tasks = loadedTasks;
