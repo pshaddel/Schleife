@@ -36,6 +36,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
         backgroundColor: Colors.blueAccent,
