@@ -58,7 +58,7 @@ class SubmitState extends State<Submit> {
           ButtonState.idle: Colors.blueGrey,
           ButtonState.loading: Colors.blue.shade300,
           ButtonState.fail: Colors.red.withOpacity(0.8),
-          ButtonState.success: Colors.black54,
+          ButtonState.success: Colors.greenAccent,
         },
         onPressed: widget.onSubmitFunction,
         state: widget.state);

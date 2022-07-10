@@ -3,6 +3,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:progress_state_button/progress_button.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 import './submit_button.dart';
+import '../../database/db_test.dart' as SQL;
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
@@ -14,10 +15,21 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   late TextEditingController _controller;
   var color;
+  var db;
+  var submitButtonState = ButtonState.idle;
+  var isSaving = false;
+
   @override
   void initState() {
     _controller = TextEditingController();
     super.initState();
+  }
+
+  void _appInitialization() async {
+    db = await SQL.SQLHelper.db();
+    print('LaunchState _appInitialization begin');
+    // simulate some time consuming initialization task
+    await Future.delayed(Duration(seconds: 5));
   }
 
   @override
@@ -29,9 +41,28 @@ class _AddTaskState extends State<AddTask> {
   /// weekdays starting by monday
   final weekDays = List.filled(7, true);
 
-  save() {
-    print(weekDays);
-    print(_controller.text);
+  save() async {
+    try {
+      isSaving = true;
+      setState(() {
+        this.submitButtonState = ButtonState.loading;
+      });
+      await SQL.SQLHelper.db();
+      await SQL.SQLHelper.createTask(
+          _controller.text, color.toString(), weekDays);
+      print(await SQL.SQLHelper.getTasks());
+      isSaving = false;
+      print('hereee');
+      setState(() {
+        this.submitButtonState = ButtonState.success;
+        _controller.text = '';
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        this.submitButtonState = ButtonState.fail;
+      });
+    }
   }
 
   @override
@@ -44,6 +75,13 @@ class _AddTaskState extends State<AddTask> {
           children: [
             TextField(
                 controller: _controller,
+                onChanged: (context) {
+                  if (submitButtonState != ButtonState.idle) {
+                    setState(() {
+                      submitButtonState = ButtonState.idle;
+                    });
+                  }
+                },
                 style: const TextStyle(fontSize: 23, color: Colors.white),
                 maxLength: 100,
                 cursorColor: Colors.white,
@@ -101,7 +139,7 @@ class _AddTaskState extends State<AddTask> {
             )
           ]),
       const Spacer(),
-      Submit(onSubmitFunction: save, state: ButtonState.idle)
+      Submit(onSubmitFunction: save, state: submitButtonState)
       // Submit(onSubmitFunction: save, state: ButtonState.idle)
     ]);
   }
