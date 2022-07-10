@@ -40,7 +40,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
         backgroundColor: Colors.blueAccent,
-        animationDuration: const Duration(milliseconds: 340),
+        animationDuration: const Duration(milliseconds: 450),
         items: const <Widget>[
           Icon(Icons.add, size: 30),
           Icon(Icons.list, size: 30),

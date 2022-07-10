@@ -14,9 +14,9 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   late TextEditingController _controller;
-  var color;
+  var color = const Color(0xfff44336);
   var db;
-  var submitButtonState = ButtonState.idle;
+  var submitButtonState = ButtonState.loading;
   var isSaving = false;
 
   @override
@@ -29,7 +29,7 @@ class _AddTaskState extends State<AddTask> {
     db = await SQL.SQLHelper.db();
     print('LaunchState _appInitialization begin');
     // simulate some time consuming initialization task
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -39,28 +39,35 @@ class _AddTaskState extends State<AddTask> {
   }
 
   /// weekdays starting by monday
-  final weekDays = List.filled(7, true);
+  var weekDays = List.filled(7, true);
 
   save() async {
     try {
       isSaving = true;
       setState(() {
-        this.submitButtonState = ButtonState.loading;
+        submitButtonState = ButtonState.loading;
       });
       await SQL.SQLHelper.db();
       await SQL.SQLHelper.createTask(
           _controller.text, color.toString(), weekDays);
+      await Future.delayed(Duration(milliseconds: 200));
       print(await SQL.SQLHelper.getTasks());
       isSaving = false;
-      print('hereee');
+      // print('hereee');
       setState(() {
-        this.submitButtonState = ButtonState.success;
+        submitButtonState = ButtonState.success;
         _controller.text = '';
+        weekDays = List.filled(7, true);
+        color = const Color(0xfff44336);
+      });
+      await Future.delayed(Duration(seconds: 2));
+      setState(() {
+        submitButtonState = ButtonState.idle;
       });
     } catch (e) {
-      print(e);
+      // print(e);
       setState(() {
-        this.submitButtonState = ButtonState.fail;
+        submitButtonState = ButtonState.fail;
       });
     }
   }
@@ -105,6 +112,7 @@ class _AddTaskState extends State<AddTask> {
                 )),
             MaterialColorPicker(
                 onColorChange: (Color color) {
+                  print(color.toString());
                   setState(() {
                     this.color = color;
                   });

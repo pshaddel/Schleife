@@ -23,7 +23,7 @@ class SubmitState extends State<Submit> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 30),
+      margin: const EdgeInsets.all(25),
       width: MediaQuery.of(context).size.width * 0.9,
       child: buildTextWithIcon(),
     );
@@ -31,36 +31,39 @@ class SubmitState extends State<Submit> {
 
   Widget buildTextWithIcon() {
     return ProgressButton(
-        maxWidth: MediaQuery.of(context).size.width * 0.7,
-        stateWidgets: {
-          ButtonState.idle: const Text(
-            "Save",
-            textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-          ),
-          ButtonState.loading: const Text(
-            "Loading",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-          ),
-          ButtonState.fail: const Text(
-            'Failed',
-            textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-          ),
-          ButtonState.success: Text(
-            'Success',
-            textAlign: TextAlign.left,
-            style:
-                TextStyle(color: Colors.grey[500], fontWeight: FontWeight.w500),
-          )
-        },
-        stateColors: {
-          ButtonState.idle: Colors.blueGrey,
-          ButtonState.loading: Colors.blue.shade300,
-          ButtonState.fail: Colors.red.withOpacity(0.8),
-          ButtonState.success: Colors.greenAccent,
-        },
-        onPressed: widget.onSubmitFunction,
-        state: widget.state);
+      stateWidgets: const {
+        ButtonState.idle: Text(
+          "Save",
+          textAlign: TextAlign.left,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        ),
+        ButtonState.loading: Text(
+          "",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        ),
+        ButtonState.fail: Text(
+          'Failed',
+          textAlign: TextAlign.left,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        ),
+        ButtonState.success: Text(
+          'Success',
+          textAlign: TextAlign.left,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        )
+      },
+      stateColors: {
+        ButtonState.idle: Colors.blueGrey,
+        ButtonState.loading: Colors.blue.shade300,
+        ButtonState.fail: Colors.red.withOpacity(0.8),
+        ButtonState.success: Colors.lightGreen,
+      },
+      onPressed: widget.onSubmitFunction,
+      state: widget.state,
+      // maxWidth: 100,
+      padding: widget.state == ButtonState.loading
+          ? EdgeInsets.only(left: MediaQuery.of(context).size.width / 2 - 40)
+          : const EdgeInsets.all(0),
+    );
   }
 }
