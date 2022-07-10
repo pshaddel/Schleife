@@ -14,7 +14,7 @@ class Task extends StatefulWidget {
       required this.taskId})
       : super(key: key);
 
-  final String taskId;
+  final int taskId;
   // final String title = 'test';
   final String description;
   final Color color;

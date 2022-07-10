@@ -25,11 +25,9 @@ class _AddTaskState extends State<AddTask> {
     super.initState();
   }
 
+  // ignore: unused_element
   void _appInitialization() async {
     db = await TaskModel.db();
-    print('LaunchState _appInitialization begin');
-    // simulate some time consuming initialization task
-    await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -48,7 +46,7 @@ class _AddTaskState extends State<AddTask> {
         submitButtonState = ButtonState.loading;
       });
       await TaskModel.db();
-      await TaskModel.createTask(_controller.text, color.toString(), weekDays);
+      await TaskModel.createTask(_controller.text, color.value, weekDays);
       await Future.delayed(Duration(milliseconds: 200));
       print(await TaskModel.getTasks());
       isSaving = false;

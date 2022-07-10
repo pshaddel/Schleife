@@ -13,7 +13,8 @@ class TaskModel {
         friday INTEGER,
         saturday INTEGER,
         sunday INTEGER,
-        color TEXT,
+        color INTEGER,
+        completed INTEGER,
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
       """);
@@ -24,7 +25,7 @@ class TaskModel {
 
   static Future<sql.Database> db() async {
     return sql.openDatabase(
-      'schleife2.db',
+      'schleife3.db',
       version: 2,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
@@ -34,7 +35,7 @@ class TaskModel {
 
   // Create new Task (journal)
   static Future<int> createTask(
-      String title, String color, List<bool> weekdays) async {
+      String title, int color, List<bool> weekdays) async {
     final db = await TaskModel.db();
     final data = {
       'title': title,
@@ -46,6 +47,7 @@ class TaskModel {
       'friday': weekdays[4] ? 1 : 0,
       'saturday': weekdays[5] ? 1 : 0,
       'sunday': weekdays[6] ? 1 : 0,
+      'completed': 0
     };
     final id = await db.insert('Tasks', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
