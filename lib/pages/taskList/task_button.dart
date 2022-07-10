@@ -1,8 +1,4 @@
-import 'dart:async';
-import 'dart:ffi';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class Task extends StatefulWidget {
@@ -11,9 +7,10 @@ class Task extends StatefulWidget {
       required this.description,
       required this.color,
       required this.isChecked,
+      required this.onChecked,
       required this.taskId})
       : super(key: key);
-
+  final onChecked;
   final int taskId;
   // final String title = 'test';
   final String description;
@@ -36,11 +33,11 @@ class TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [checkbox(), buildTextWithIcon()],
+      children: [checkbox(), progressButtonWidget()],
     );
   }
 
-  Widget buildTextWithIcon() {
+  Widget progressButtonWidget() {
     return ProgressButton(
         maxWidth: MediaQuery.of(context).size.width * 0.7,
         stateWidgets: {
@@ -92,10 +89,24 @@ class TaskState extends State<Task> {
         // fillColor: MaterialState.pressed,
         value: isChecked,
         onChanged: (bool? value) {
+          widget.onChecked(value);
           setState(() {
             isChecked = value!;
           });
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      isChecked = widget.isChecked;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   onPressedIconWithText() {}

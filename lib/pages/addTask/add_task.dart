@@ -45,7 +45,6 @@ class _AddTaskState extends State<AddTask> {
       setState(() {
         submitButtonState = ButtonState.loading;
       });
-      await TaskModel.db();
       await TaskModel.createTask(_controller.text, color.value, weekDays);
       await Future.delayed(Duration(milliseconds: 200));
       print(await TaskModel.getTasks());

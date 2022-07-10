@@ -83,6 +83,18 @@ class TaskModel {
     return result;
   }
 
+  // Update an Task by id
+  static Future<int> checkTask(int id, bool value) async {
+    print("${id} - ${value}");
+    final db = await TaskModel.db();
+
+    final data = {'completed': value ? 1 : 0};
+
+    final result =
+        await db.update('Tasks', data, where: "id = ?", whereArgs: [id]);
+    return result;
+  }
+
   // Delete
   static Future<void> deleteTask(int id) async {
     final db = await TaskModel.db();
