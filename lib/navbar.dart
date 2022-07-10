@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:world/pages/addTask/addTask.dart';
-import './pages/taskList/taskList.dart';
+import 'package:world/pages/addTask/add_task.dart';
+import 'pages/taskList/task_list.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({Key? key}) : super(key: key);
