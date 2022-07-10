@@ -3,7 +3,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:progress_state_button/progress_button.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 import './submit_button.dart';
-import '../../database/db_test.dart' as SQL;
+import '../../database/task.model.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void _appInitialization() async {
-    db = await SQL.SQLHelper.db();
+    db = await TaskModel.db();
     print('LaunchState _appInitialization begin');
     // simulate some time consuming initialization task
     await Future.delayed(Duration(seconds: 1));
@@ -47,11 +47,10 @@ class _AddTaskState extends State<AddTask> {
       setState(() {
         submitButtonState = ButtonState.loading;
       });
-      await SQL.SQLHelper.db();
-      await SQL.SQLHelper.createTask(
-          _controller.text, color.toString(), weekDays);
+      await TaskModel.db();
+      await TaskModel.createTask(_controller.text, color.toString(), weekDays);
       await Future.delayed(Duration(milliseconds: 200));
-      print(await SQL.SQLHelper.getTasks());
+      print(await TaskModel.getTasks());
       isSaving = false;
       // print('hereee');
       setState(() {

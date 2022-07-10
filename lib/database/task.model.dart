@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
-class SQLHelper {
+class TaskModel {
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE Tasks(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -35,7 +35,7 @@ class SQLHelper {
   // Create new Task (journal)
   static Future<int> createTask(
       String title, String color, List<bool> weekdays) async {
-    final db = await SQLHelper.db();
+    final db = await TaskModel.db();
     final data = {
       'title': title,
       'color': color,
@@ -54,21 +54,21 @@ class SQLHelper {
 
   // Read all Tasks (journals)
   static Future<List<Map<String, dynamic>>> getTasks() async {
-    final db = await SQLHelper.db();
+    final db = await TaskModel.db();
     return db.query('Tasks', orderBy: "id");
   }
 
   // Read a single Task by id
   // The app doesn't use this method but I put here in case you want to see it
   static Future<List<Map<String, dynamic>>> getTask(int id) async {
-    final db = await SQLHelper.db();
+    final db = await TaskModel.db();
     return db.query('Tasks', where: "id = ?", whereArgs: [id], limit: 1);
   }
 
   // Update an Task by id
   static Future<int> updateTask(
       int id, String title, String? descrption) async {
-    final db = await SQLHelper.db();
+    final db = await TaskModel.db();
 
     final data = {
       'title': title,
@@ -83,7 +83,7 @@ class SQLHelper {
 
   // Delete
   static Future<void> deleteTask(int id) async {
-    final db = await SQLHelper.db();
+    final db = await TaskModel.db();
     try {
       await db.delete("Tasks", where: "id = ?", whereArgs: [id]);
     } catch (err) {
