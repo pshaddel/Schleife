@@ -33,6 +33,7 @@ class _AddTaskState extends State<AddTask> {
   partialHintTextAnimation() async {
     for (var i = 0; i < finalHintText.length; i++) {
       await Future.delayed(const Duration(milliseconds: 14));
+      if (!mounted) return;
       setState(() {
         hintText = hintText + finalHintText[i];
       });
@@ -61,7 +62,6 @@ class _AddTaskState extends State<AddTask> {
       });
       await TaskModel.createTask(_controller.text, color.value, weekDays);
       await Future.delayed(const Duration(milliseconds: 200));
-      // print(await TaskModel.getTasks());
       isSaving = false;
       setState(() {
         submitButtonState = ButtonState.success;
@@ -92,7 +92,7 @@ class _AddTaskState extends State<AddTask> {
           children: [
             TextField(
                 controller: _controller,
-                autofocus: true,
+                // autofocus: true,
                 onChanged: (context) {
                   if (submitButtonState != ButtonState.idle) {
                     setState(() {

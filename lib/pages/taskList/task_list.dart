@@ -44,11 +44,48 @@ class _TaskListState extends State<TaskList> {
           TaskModel.checkTask(element['id'], newValue);
         },
       ));
-      loadedTasks.add(SizedBox(
+      loadedTasks.add(const SizedBox(
         height: 10,
       ));
     }
-    print(data);
+
+    if (loadedTasks.isEmpty) {
+      loadedTasks.add(const Center(
+          child: Text(
+        'You Do Not Have Any Task!',
+        style: const TextStyle(color: Colors.white, fontSize: 22),
+      )));
+
+      loadedTasks.add(const SizedBox(
+        height: 50,
+      ));
+      loadedTasks.add(
+        Row(children: [
+          const Text(
+            'Use This ',
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(2)),
+            child: const Icon(
+              Icons.add,
+              color: Colors.black,
+              size: 20,
+            ),
+            onPressed: () {},
+          ),
+          const Text(
+            'to Add Some Tasks :)',
+            style: const TextStyle(color: Colors.white, fontSize: 22),
+          )
+        ]),
+      );
+    }
+
+    if (!mounted) return;
 
     setState(() {
       tasks = loadedTasks;

@@ -67,6 +67,7 @@ class TaskModel {
       'sunday'
     ];
     final today = DateTime.now().weekday.toInt();
+    return [];
     return db.query('Tasks',
         orderBy: "id", where: "${weekdays[today - 1]} = ?", whereArgs: [1]);
   }
@@ -96,7 +97,6 @@ class TaskModel {
 
   // Update an Task by id
   static Future<int> checkTask(int id, bool value) async {
-    print("${id} - ${value}");
     final db = await TaskModel.db();
 
     final data = {'completed': value ? 1 : 0};
