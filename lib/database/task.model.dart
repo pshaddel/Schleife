@@ -67,7 +67,7 @@ class TaskModel {
       'sunday'
     ];
     final today = DateTime.now().weekday.toInt();
-    return [];
+    // return [];
     return db.query('Tasks',
         orderBy: "id", where: "${weekdays[today - 1]} = ?", whereArgs: [1]);
   }

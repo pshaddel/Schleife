@@ -124,7 +124,6 @@ class _AddTaskState extends State<AddTask> {
                 )),
             MaterialColorPicker(
                 onColorChange: (Color color) {
-                  print(color.toString());
                   setState(() {
                     this.color = color;
                   });
@@ -144,16 +143,12 @@ class _AddTaskState extends State<AddTask> {
               child: WeekdaySelector(
                 onChanged: (int day) {
                   setState(() {
-                    // Use module % 7 as Sunday's index in the array is 0 and
-                    // DateTime.sunday constant integer value is 7.
                     final index = day % 7;
-                    // We "flip" the value in this example, but you may also
-                    // perform validation, a DB write, an HTTP call or anything
-                    // else before you actually flip the value,
-                    // it's up to your app's needs.
                     weekDays[index] = !weekDays[index];
                   });
                 },
+                selectedFillColor: Colors.green,
+                disabledFillColor: Colors.red,
                 values: weekDays,
               ),
             )
