@@ -18,11 +18,25 @@ class _AddTaskState extends State<AddTask> {
   var db;
   var submitButtonState = ButtonState.idle;
   var isSaving = false;
+  final finalHintText = 'Write Your Habit Here...';
+  var hintText = '';
+
+  var habitInputType = TextInputType.none;
 
   @override
   void initState() {
     _controller = TextEditingController();
     super.initState();
+    partialHintTextAnimation();
+  }
+
+  partialHintTextAnimation() async {
+    for (var i = 0; i < finalHintText.length; i++) {
+      await Future.delayed(const Duration(milliseconds: 14));
+      setState(() {
+        hintText = hintText + finalHintText[i];
+      });
+    }
   }
 
   // ignore: unused_element
@@ -46,7 +60,7 @@ class _AddTaskState extends State<AddTask> {
         submitButtonState = ButtonState.loading;
       });
       await TaskModel.createTask(_controller.text, color.value, weekDays);
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       // print(await TaskModel.getTasks());
       isSaving = false;
       setState(() {
@@ -55,7 +69,7 @@ class _AddTaskState extends State<AddTask> {
         weekDays = List.filled(7, true);
         color = const Color(0xfff44336);
       });
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       setState(() {
         submitButtonState = ButtonState.idle;
       });
@@ -78,6 +92,7 @@ class _AddTaskState extends State<AddTask> {
           children: [
             TextField(
                 controller: _controller,
+                autofocus: true,
                 onChanged: (context) {
                   if (submitButtonState != ButtonState.idle) {
                     setState(() {
@@ -88,11 +103,12 @@ class _AddTaskState extends State<AddTask> {
                 style: const TextStyle(fontSize: 23, color: Colors.white),
                 maxLength: 100,
                 cursorColor: Colors.white,
+                showCursor: true,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   focusColor: Colors.amber,
                   prefixIconColor: Colors.amber,
-                  hintText: 'Habit',
+                  hintText: hintText,
                   hintStyle: const TextStyle(color: Colors.white70),
                   border: OutlineInputBorder(
                     borderSide:
