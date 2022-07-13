@@ -38,7 +38,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: CurvedNavigationBar(
-        index: 0,
+        index: _selectedIndex,
         backgroundColor: Colors.blueAccent,
         animationDuration: const Duration(milliseconds: 450),
         items: const <Widget>[
