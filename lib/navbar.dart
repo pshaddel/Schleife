@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:world/pages/addTask/add_task.dart';
+import 'package:Schleife/pages/addTask/add_task.dart';
 import 'pages/taskList/task_list.dart';
 
 class BottomNavbar extends StatefulWidget {
