@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/progress_button.dart';
 
+import '../../database/task.model.dart';
+
 class Task extends StatefulWidget {
   const Task(
       {Key? key,
@@ -8,6 +10,7 @@ class Task extends StatefulWidget {
       required this.color,
       required this.isChecked,
       required this.onChecked,
+      required this.onDelete,
       required this.taskId})
       : super(key: key);
   final onChecked;
@@ -16,6 +19,7 @@ class Task extends StatefulWidget {
   final String description;
   final Color color;
   final bool isChecked;
+  final onDelete;
   @override
   TaskState createState() => TaskState();
 }
@@ -33,13 +37,54 @@ class TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [checkbox(), progressButtonWidget()],
+      children: [
+        checkbox(),
+        progressButtonWidget(),
+        PopupMenuButton(
+          splashRadius: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          onSelected: (value) {
+            switch (value) {
+              case 'delete':
+                widget.onDelete();
+                break;
+              case 'edit':
+                print('edit');
+                break;
+              default:
+            }
+          },
+          itemBuilder: (BuildContext bc) {
+            return const [
+              PopupMenuItem(
+                value: 'delete',
+                child: Text("Delete"),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                child: Text("Edit"),
+              ),
+              PopupMenuItem(
+                value: 'coffee',
+                child: Text("Take a Break this time"),
+              )
+            ];
+          },
+        )
+        // IconButton(
+        //     onPressed: () async {
+        //       await TaskModel.deleteTask(widget.taskId);
+        //     },
+        //     icon: const Icon(Icons.delete))
+      ],
     );
   }
 
   Widget progressButtonWidget() {
     return ProgressButton(
-        maxWidth: MediaQuery.of(context).size.width * 0.7,
+        maxWidth: MediaQuery.of(context).size.width * 0.65,
         stateWidgets: {
           ButtonState.idle: const Text(
             "Idle",

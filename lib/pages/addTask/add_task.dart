@@ -32,7 +32,7 @@ class _AddTaskState extends State<AddTask> {
 
   partialHintTextAnimation() async {
     for (var i = 0; i < finalHintText.length; i++) {
-      await Future.delayed(const Duration(milliseconds: 14));
+      await Future.delayed(const Duration(milliseconds: 20));
       if (!mounted) return;
       setState(() {
         hintText = hintText + finalHintText[i];
